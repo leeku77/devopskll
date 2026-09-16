@@ -2,13 +2,17 @@ pipeline {
     agent { 
         node {
             label 'docker-agent-python'
-            }
-      }
+            } 
+    }
+    parameters {
+        string(name: 'NEW_VERSION', defaultValue: '1.1.1', description: 'Version to build and deliver')
+        choice(name: 'ENVIRONMENT', choices: ['dev', 'qa', 'prod'], description: 'Environment to deploy to')
+        booleanParam(name: 'RUN_TESTS', defaultValue: true, description: 'Run tests after build?')
+    }
     triggers {
         pollSCM '*/5 * * * *'
     }
     environment {
-        NEW_VERSION = "1.1.1"
         SERVER_CREDENTIALS = credentials('globalkll')
     }
     stages {
@@ -39,6 +43,7 @@ pipeline {
                 echo 'Deliver....'
                 sh '''
                 echo "doing delivery stuff.."
+                echo "Delivering version ${NEW_VERSION} to server"
                 '''
             }
         }
