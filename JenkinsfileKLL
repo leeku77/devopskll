@@ -19,7 +19,7 @@ pipeline {
         stage('Build') {
             steps {
                 echo "Building..the application"
-                echo "Building version ${NEW_VERSION}"
+                echo "Building version ${params.NEW_VERSION}"
                 sh '''
                 cd myapp
                 python3 -m venv .venv
