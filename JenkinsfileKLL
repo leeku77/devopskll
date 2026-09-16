@@ -10,7 +10,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo "Building.."
+                echo "Building..the application"
                 sh '''
                 cd myapp
                 python3 -m venv .venv
@@ -25,7 +25,7 @@ pipeline {
                 sh '''
                 cd myapp
                 .venv/bin/python hello.py --name "Yoona"
-                .venv/bin/python hello.py --name "Brad"
+                .venv/bin/python hello.py --name "Seohyun"
                 '''
             }
         }
