@@ -7,10 +7,15 @@ pipeline {
     triggers {
         pollSCM '*/5 * * * *'
     }
+    environment {
+        NEW_VERSION = "1.1.1"
+        SERVER_CREDENTIALS = credentials('globalkll')
+    }
     stages {
         stage('Build') {
             steps {
                 echo "Building..the application"
+                echo "Building version ${NEW_VERSION}"
                 sh '''
                 cd myapp
                 python3 -m venv .venv
@@ -37,5 +42,18 @@ pipeline {
                 '''
             }
         }
+    }
+    post {
+        always {
+            echo 'Cleaning up...'
+            sh '''
+            cd myapp
+            rm -rf .venv
+            '''
+        }
+        success{
+            echo 'Build completed successfully!'
+        }
+
     }
 }
